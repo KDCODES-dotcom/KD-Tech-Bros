@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flappy Robot</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #111;
+      font-family: sans-serif;
+      color: #fff;
+    }
+
+    canvas {
+      display: block;
+      margin: auto;
+      background: #222;
+    }
+
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 20px;
+      color: #00ffc8;
+    }
+  </style>
+</head>
+<body>
+  <div id="score">Score: 0</div>
+  <canvas id="gameCanvas" width="480" height="640"></canvas>
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const robot = {
+      x: 50,
+      y: 150,
+      width: 40,
+      height: 40,
+      gravity: 0.6,
+      lift: -10,
+      velocity: 0,
+    };
+
+    let pipes = [];
+    let frame = 0;
+    let score = 0;
+    let gameOver = false;
+
+    function drawRobot() {
+      ctx.fillStyle = "#00ffc8";
+      ctx.fillRect(robot.x, robot.y, robot.width, robot.height);
+      ctx.fillStyle = "#111";
+      ctx.fillRect(robot.x + 10, robot.y + 10, 5, 5); // robot eye
+    }
+
+    function drawPipe(pipe) {
+      ctx.fillStyle = "#888";
+      ctx.fillRect(pipe.x, 0, pipe.width, pipe.top);
+      ctx.fillRect(pipe.x, pipe.bottom, pipe.width, canvas.height - pipe.bottom);
+    }
+
+    function update() {
+      if (gameOver) return;
+
+      robot.velocity += robot.gravity;
+      robot.y += robot.velocity;
+
+      if (frame % 90 === 0) {
+        let top = Math.random() * 200 + 50;
+        let gap = 140;
+        pipes.push({
+          x: canvas.width,
+          width: 50,
+          top: top,
+          bottom: top + gap
+        });
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawRobot();
+
+      for (let i = 0; i < pipes.length; i++) {
+        let p = pipes[i];
+        p.x -= 2;
+        drawPipe(p);
+
+        if (
+          robot.x < p.x + p.width &&
+          robot.x + robot.width > p.x &&
+          (robot.y < p.top || robot.y + robot.height > p.bottom)
+        ) {
+          gameOver = true;
+          alert("Game Over! Final Score: " + score);
+          document.location.reload();
+        }
+
+        if (p.x + p.width < robot.x && !p.passed) {
+          score++;
+          p.passed = true;
+          document.getElementById("score").innerText = "Score: " + score;
+        }
+      }
+
+      if (robot.y + robot.height > canvas.height) {
+        gameOver = true;
+        alert("Game Over! Final Score: " + score);
+        document.location.reload();
+      }
+
+      frame++;
+      requestAnimationFrame(update);
+    }
+
+    function flap() {
+      robot.velocity = robot.lift;
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space") flap();
+    });
+
+    update();
+  </script>
+</body>
+</html>
