@@ -119,16 +119,15 @@
     }
 
     document.addEventListener("keydown", (e) => {
-      if (e.code === "Space") flap();
-    });
-  // Tap or click to flap!
-  document.addEventListener("click", function() {
-    velocity = -10;
-  });
+      if (e.code === "Space")  // Tap or click to flap!
+  
+      document.addEventListener("click", function () {
+  flap();
+});
 
-  document.addEventListener("touchstart", function() {
-    velocity = -10;
-  });
+document.addEventListener("touchstart", function () {
+  flap();
+}); 
     
     
     update();
