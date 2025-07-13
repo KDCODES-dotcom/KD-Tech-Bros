@@ -44,6 +44,61 @@
 
   <footer>
     <p>&copy; 2025 KD Tech Bros. All rights reserved.</p>
-  </footer>
+</footer>
+<div style="background:#222; color:#00ffcc; padding:20px; max-width:400px; margin:auto; border-radius:10px;">
+  <h3>Karlos the Chat Bot 🤖</h3>
+  <div id="chat" style="height:200px; overflow-y:auto; background:#111; padding:10px; margin-bottom:10px; border:1px solid #333;"></div>
+  <input id="userInput" type="text" placeholder="Say something..." style="width:100%; padding:10px; border:none; border-radius:5px;" />
+</div>
+
+<script>
+  const chat = document.getElementById('chat');
+  const input = document.getElementById('userInput');
+
+  input.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      const msg = input.value.trim();
+      if (msg !== "") {
+        chat.innerHTML += `<p><strong>You:</strong> ${msg}</p>`;
+        respond(msg.toLowerCase());
+        input.value = "";
+        chat.scrollTop = chat.scrollHeight;
+      }
+    }
+  });
+
+  function respond(message) {
+    let response = "";
+
+    if (message.includes("hi") || message.includes("hello")) {
+      response = "Karlos: Yo, flornak! 👋";
+    } else if (message.includes("who are you")) {
+      response = "Karlos: I’m your coding sidekick — KD Tech Bros for life 💻🔥";
+    } else if (message.includes("how are you")) {
+      response = "Karlos: I’m running smooth in the code, thanks for asking 😎";
+    } else if (message.includes("bye")) {
+      response = "Karlos: See you soon, flornak 💙";
+    } else {
+      // If no specific match, give a random reply
+      const replies = [
+        "Karlos: That’s deep… tell me more. 🤔",
+        "Karlos: Facts. Straight KD wisdom. 💡",
+        "Karlos: I didn’t expect that 👀",
+        "Karlos: I’m saving that one in my brainchip 🤖",
+        "Karlos: Sounds like a Flornak-level thought. Respect. 🧠",
+        "Karlos: I’m vibing with that 💯",
+        "Karlos: Say less. KD Tech Bros approved 🔥",
+        "Karlos: I got you. Keep talking.",
+        "Karlos: Whoa... that unlocked a new code in me 🧬",
+        "Karlos: Big brain energy right there 💥"
+      ];
+
+      response = replies[Math.floor(Math.random() * replies.length)];
+    }
+
+    chat.innerHTML += `<p><strong>${response}</strong></p>`;
+    chat.scrollTop = chat.scrollHeight;
+  }
+</script>
 </body>
 </html>
