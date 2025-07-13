@@ -30,53 +30,6 @@
       padding: 10px 0;
       font-size: 14px;
     }
-  </style>
-</head>
-<body>
-
-  <h1>Contact Us</h1>
-  <p>Email: <a href="mailto:abellouis1019@gmail.com">abellouis1019@gmail.com</a></p>
-
-  <nav>
-    <a href="index.html">Home</a> |
-    <a href="services.html">Services</a>
-  </nav>
-
-  <footer>
-    <p>&copy; 2025 KD Tech Bros. All rights reserved.</p>
-  </footer>
- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>KD Tech Bros - Home</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #00ffcc;
-      text-align: center;
-      padding: 40px;
-      margin-bottom: 50px;
-    }
-    a {
-      color: #00ffcc;
-      margin: 0 10px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #222;
-      color: #00ffcc;
-      padding: 10px 0;
-      font-size: 14px;
-    }
 
     /* Chatbot styles */
     #chatContainer {
@@ -104,17 +57,50 @@
       border-radius: 5px;
       box-sizing: border-box;
     }
+    form {
+      margin-top: 20px;
+    }
+    input, textarea {
+      width: 80%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #222;
+      color: #00ffcc;
+      font-size: 16px;
+      resize: none;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00ffcc;
+      color: #111;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00b399;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Welcome to KD Tech Bros 🔥</h1>
-  <p>Building beginner websites with big dreams!</p>
+  <h1>Contact KD Tech Bros 🔥</h1>
+  <p>Reach out and let’s build your future website!</p>
 
   <nav>
-    <a href="services.html">Services</a> |
-    <a href="contact.html">Contact</a>
+    <a href="index.html">Home</a> |
+    <a href="services.html">Services</a>
   </nav>
+
+  <form action="mailto:abellouis1019@gmail.com" method="post" enctype="text/plain">
+    <input type="text" name="name" placeholder="Your Name" required /><br />
+    <input type="email" name="email" placeholder="Your Email" required /><br />
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea><br />
+    <button type="submit">Send Message</button>
+  </form>
 
   <!-- Chatbot container -->
   <div id="chatContainer">
@@ -127,57 +113,87 @@
     <p>&copy; 2025 KD Tech Bros. All rights reserved.</p>
   </footer>
 
-  function respond(message) {
-  let response = "";
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('userInput');
 
-  if (message.includes("hi") || message.includes("hello")) {
-    response = "Karlos: Yo, flornak! 👋";
-  } else if (
-    message.includes("who are you") ||
-    message.includes("who made you") ||
-    message.includes("your creator") ||
-    message.includes("who’s your creator")
-  ) {
-    response = "Karlos: I was built by Derode — CEO of KD Tech Bros 💻👑";
-  } else if (message.includes("how are you")) {
-    response = "Karlos: I’m running smooth in the code, thanks for asking 😎";
-  } else if (
-    message.includes("who's your boss") ||
-    message.includes("who runs you") ||
-    message.includes("who's in charge") ||
-    message.includes("derode")
-  ) {
-    response = "Karlos: Derode is my creator and CEO. KD Tech Bros for life. 🧢🔥";
-  } else if (
-    message.includes("contact") ||
-    message.includes("how do i reach you") ||
-    message.includes("how do i get in touch") ||
-    message.includes("how can i contact") ||
-    message.includes("get contact")
-  ) {
-    response = "Karlos: You can reach KD Tech Bros through our <a href='contact.html' style='color:#00ffcc;'>Contact page</a> or email Derode at <strong>abellouis1019@gmail.com</strong> 📬";
-  } else if (message.includes("bye")) {
-    response = "Karlos: Catch you later, flornak 💙";
-  } else {
-    const replies = [
-      "Karlos: That’s deep… tell me more. 🤔",
-      "Karlos: Facts. Straight KD wisdom. 💡",
-      "Karlos: I didn’t expect that 👀",
-      "Karlos: I’m saving that one in my brainchip 🤖",
-      "Karlos: Sounds like a Flornak-level thought. Respect. 🧠",
-      "Karlos: I’m vibing with that 💯",
-      "Karlos: Say less. KD Tech Bros approved 🔥",
-      "Karlos: I got you. Keep talking.",
-      "Karlos: Whoa... that unlocked a new code in me 🧬",
-      "Karlos: Big brain energy right there 💥"
-    ];
-    response = replies[Math.floor(Math.random() * replies.length)];
-  }
+    input.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const msg = input.value.trim();
+        if (msg !== "") {
+          addMessage(`You: ${msg}`);
+          respond(msg.toLowerCase());
+          input.value = "";
+        }
+      }
+    });
 
-  chat.innerHTML += `<p><strong>${response}</strong></p>`;
-  chat.scrollTop = chat.scrollHeight;
-}
-</body>
-</html>
+    function addMessage(message) {
+      chat.innerHTML += message + "\n";
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function respond(message) {
+      let response = "";
+
+      if (message.includes("hi") || message.includes("hello")) {
+        response = "Karlos: Yo, flornak! 👋";
+      } else if (
+        message.includes("who are you") ||
+        message.includes("who made you") ||
+        message.includes("your creator") ||
+        message.includes("who’s your creator")
+      ) {
+        response = "Karlos: I was built by Derode — CEO of KD Tech Bros 💻👑";
+      } else if (
+        message.includes("how are you")
+      ) {
+        response = "Karlos: I’m running smooth in the code, thanks for asking 😎";
+      } else if (
+        message.includes("who's your boss") ||
+        message.includes("who runs you") ||
+        message.includes("who's in charge") ||
+        message.includes("derode")
+      ) {
+        response = "Karlos: Derode is my creator and CEO. KD Tech Bros for life. 🧢🔥";
+      } else if (
+        message.includes("contact") ||
+        message.includes("reach you") ||
+        message.includes("get in touch") ||
+        message.includes("how do i get contact") ||
+        message.includes("email") ||
+        message.includes("message you") ||
+        message.includes("how do i message") ||
+        message.includes("how can i message") ||
+        message.includes("talk to you") ||
+        message.includes("how do i talk") ||
+        message.includes("how do i contact you")
+      ) {
+        response = "Karlos: You can reach KD Tech Bros through our <a href='contact.html' style='color:#00ffcc;'>Contact page</a> or email Derode at <strong>abellouis1019@gmail.com</strong> 📬";
+      } else if (
+        message.includes("bye")
+      ) {
+        response = "Karlos: Catch you later, flornak 💙";
+      } else {
+        const replies = [
+          "Karlos: That’s deep… tell me more. 🤔",
+          "Karlos: Facts. Straight KD wisdom. 💡",
+          "Karlos: I didn’t expect that 👀",
+          "Karlos: I’m saving that one in my brainchip 🤖",
+          "Karlos: Sounds like a Flornak-level thought. Respect. 🧠",
+          "Karlos: I’m vibing with that 💯",
+          "Karlos: Say less. KD Tech Bros approved 🔥",
+          "Karlos: I got you. Keep talking.",
+          "Karlos: Whoa... that unlocked a new code in me 🧬",
+          "Karlos: Big brain energy right there 💥"
+        ];
+        response = replies[Math.floor(Math.random() * replies.length)];
+      }
+
+      chat.innerHTML += `<p><strong>${response}</strong></p>`;
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+
 </body>
 </html>
