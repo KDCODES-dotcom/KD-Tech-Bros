@@ -45,60 +45,140 @@
   <footer>
     <p>&copy; 2025 KD Tech Bros. All rights reserved.</p>
   </footer>
- <div style="background:#222; color:#00ffcc; padding:20px; max-width:400px; margin:auto; border-radius:10px;">
-  <h3>Karlos the Chat Bot 🤖</h3>
-  <div id="chat" style="height:200px; overflow-y:auto; background:#111; padding:10px; margin-bottom:10px; border:1px solid #333;"></div>
-  <input id="userInput" type="text" placeholder="Say something..." style="width:100%; padding:10px; border:none; border-radius:5px;" />
-</div>
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KD Tech Bros - Home</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #00ffcc;
+      text-align: center;
+      padding: 40px;
+      margin-bottom: 50px;
+    }
+    a {
+      color: #00ffcc;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #222;
+      color: #00ffcc;
+      padding: 10px 0;
+      font-size: 14px;
+    }
 
-<script>
-  const chat = document.getElementById('chat');
-  const input = document.getElementById('userInput');
+    /* Chatbot styles */
+    #chatContainer {
+      background:#222; 
+      color:#00ffcc; 
+      padding:20px; 
+      max-width:400px; 
+      margin: 20px auto; 
+      border-radius:10px;
+      text-align: left;
+    }
+    #chat {
+      height: 200px; 
+      overflow-y: auto; 
+      background: #111; 
+      padding: 10px; 
+      margin-bottom: 10px; 
+      border: 1px solid #333;
+      white-space: pre-wrap;
+    }
+    #userInput {
+      width: 100%; 
+      padding: 10px; 
+      border: none; 
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
 
-  input.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-      const msg = input.value.trim();
-      if (msg !== "") {
-        chat.innerHTML += `<p><strong>You:</strong> ${msg}</p>`;
-        respond(msg.toLowerCase());
-        input.value = "";
-        chat.scrollTop = chat.scrollHeight;
+  <h1>Welcome to KD Tech Bros 🔥</h1>
+  <p>Building beginner websites with big dreams!</p>
+
+  <nav>
+    <a href="services.html">Services</a> |
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <!-- Chatbot container -->
+  <div id="chatContainer">
+    <h3>Karlos the Chat Bot 🤖</h3>
+    <div id="chat"></div>
+    <input id="userInput" type="text" placeholder="Say something..." autocomplete="off" />
+  </div>
+
+  <footer>
+    <p>&copy; 2025 KD Tech Bros. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('userInput');
+
+    input.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const msg = input.value.trim();
+        if (msg !== "") {
+          addMessage(`You: ${msg}`);
+          respond(msg.toLowerCase());
+          input.value = "";
+        }
       }
-    }
-  });
+    });
 
-  function respond(message) {
-    let response = "";
-
-    if (message.includes("hi") || message.includes("hello")) {
-      response = "Karlos: Yo, flornak! 👋";
-    } else if (message.includes("who are you")) {
-      response = "Karlos: I’m your coding sidekick — KD Tech Bros for life 💻🔥";
-    } else if (message.includes("how are you")) {
-      response = "Karlos: I’m running smooth in the code, thanks for asking 😎";
-    } else if (message.includes("bye")) {
-      response = "Karlos: See you soon, flornak 💙";
-    } else {
-      // If no specific match, give a random reply
-      const replies = [
-        "Karlos: That’s deep… tell me more. 🤔",
-        "Karlos: Facts. Straight KD wisdom. 💡",
-        "Karlos: I didn’t expect that 👀",
-        "Karlos: I’m saving that one in my brainchip 🤖",
-        "Karlos: Sounds like a Flornak-level thought. Respect. 🧠",
-        "Karlos: I’m vibing with that 💯",
-        "Karlos: Say less. KD Tech Bros approved 🔥",
-        "Karlos: I got you. Keep talking.",
-        "Karlos: Whoa... that unlocked a new code in me 🧬",
-        "Karlos: Big brain energy right there 💥"
-      ];
-
-      response = replies[Math.floor(Math.random() * replies.length)];
+    function addMessage(message) {
+      chat.innerHTML += message + "\n";
+      chat.scrollTop = chat.scrollHeight;
     }
 
-    chat.innerHTML += `<p><strong>${response}</strong></p>`;
-    chat.scrollTop = chat.scrollHeight;
-  }
-</script>
+    function respond(message) {
+      let response = "";
+
+      if (message.includes("hi") || message.includes("hello")) {
+        response = "Karlos: Yo, flornak! 👋";
+      } else if (message.includes("who are you") || message.includes("who made you") || message.includes("your creator") || message.includes("who’s your creator")) {
+        response = "Karlos: I was built by Derode — KD Tech Bros original 💻👑";
+      } else if (message.includes("how are you")) {
+        response = "Karlos: I’m running smooth in the code, thanks for asking 😎";
+      } else if (message.includes("bye")) {
+        response = "Karlos: Catch you later, flornak 💙";
+      } else {
+        const replies = [
+          "Karlos: That’s deep… tell me more. 🤔",
+          "Karlos: Facts. Straight KD wisdom. 💡",
+          "Karlos: I didn’t expect that 👀",
+          "Karlos: I’m saving that one in my brainchip 🤖",
+          "Karlos: Sounds like a Flornak-level thought. Respect. 🧠",
+          "Karlos: I’m vibing with that 💯",
+          "Karlos: Say less. KD Tech Bros approved 🔥",
+          "Karlos: I got you. Keep talking.",
+          "Karlos: Whoa... that unlocked a new code in me 🧬",
+          "Karlos: Big brain energy right there 💥"
+        ];
+        response = replies[Math.floor(Math.random() * replies.length)];
+      }
+
+      addMessage(response);
+    }
+  </script>
+
+</body>
+</html>
 </body>
 </html>
