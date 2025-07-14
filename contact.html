@@ -102,98 +102,84 @@
     <button type="submit">Send Message</button>
   </form>
 
-  <!-- Chatbot container -->
-  <div id="chatContainer">
-    <h3>Karlos the Chat Bot 🤖</h3>
-    <div id="chat"></div>
-    <input id="userInput" type="text" placeholder="Say something..." autocomplete="off" />
-  </div>
-
-  <footer>
-    <p>&copy; 2025 KD Tech Bros. All rights reserved.</p>
-  </footer>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Karlos 2.0 Dictionary</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #333;
+    }
+    input {
+      padding: 10px;
+      width: 60%;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    p {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 Karlos 2.0 — Dictionary Mode</h1>
+  <input id="word" type="text" placeholder="Type any word..." />
+  <br>
+  <button onclick="getDefinition()">Ask Karlos</button>
+  <p id="response">Waiting for input...</p>
 
   <script>
-    const chat = document.getElementById('chat');
-    const input = document.getElementById('userInput');
+    async function getDefinition() {
+      const word = document.getElementById("word").value.trim();
+      const responseElement = document.getElementById("response");
 
-    input.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        const msg = input.value.trim();
-        if (msg !== "") {
-          addMessage(`You: ${msg}`);
-          respond(msg.toLowerCase());
-          input.value = "";
+      if (!word) {
+        responseElement.innerText = "Please type a word!";
+        return;
+      }
+
+      responseElement.innerText = "Looking it up...";
+
+      try {
+        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+        const data = await res.json();
+
+        if (data && data[0]?.meanings?.[0]?.definitions?.[0]) {
+          const definition = data[0].meanings[0].definitions[0].definition;
+          const message = `${word} means: ${definition}`;
+          responseElement.innerText = `🧠 ${message}`;
+
+          // Voice response
+          const speak = new SpeechSynthesisUtterance(message);
+          speechSynthesis.speak(speak);
+        } else {
+          responseElement.innerText = `😕 Karlos 2.0 doesn’t know that word. Try another one.`;
         }
+      } catch (error) {
+        responseElement.innerText = "⚠️ Error: Could not fetch definition.";
       }
-    });
-
-    function addMessage(message) {
-      chat.innerHTML += message + "\n";
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    function respond(message) {
-      let response = "";
-
-      if (message.includes("hi") || message.includes("hello")) {
-        response = "Karlos: Yo, flornak! 👋";
-      } else if (
-        message.includes("who are you") ||
-        message.includes("who made you") ||
-        message.includes("your creator") ||
-        message.includes("who’s your creator")
-      ) {
-        response = "Karlos: I was built by Derode — CEO of KD Tech Bros 💻👑";
-      } else if (
-        message.includes("how are you")
-      ) {
-        response = "Karlos: I’m running smooth in the code, thanks for asking 😎";
-      } else if (
-        message.includes("who's your boss") ||
-        message.includes("who runs you") ||
-        message.includes("who's in charge") ||
-        message.includes("derode")
-      ) {
-        response = "Karlos: Derode is my creator and CEO. KD Tech Bros for life. 🧢🔥";
-      } else if (
-        message.includes("contact") ||
-        message.includes("reach you") ||
-        message.includes("get in touch") ||
-        message.includes("how do i get contact") ||
-        message.includes("email") ||
-        message.includes("message you") ||
-        message.includes("how do i message") ||
-        message.includes("how can i message") ||
-        message.includes("talk to you") ||
-        message.includes("how do i talk") ||
-        message.includes("how do i contact you")
-      ) {
-        response = "Karlos: You can reach KD Tech Bros through our <a href='contact.html' style='color:#00ffcc;'>Contact page</a> or email Derode at <strong>abellouis1019@gmail.com</strong> 📬";
-      } else if (
-        message.includes("bye")
-      ) {
-        response = "Karlos: Catch you later, flornak 💙";
-      } else {
-        const replies = [
-          "Karlos: That’s deep… tell me more. 🤔",
-          "Karlos: Facts. Straight KD wisdom. 💡",
-          "Karlos: I didn’t expect that 👀",
-          "Karlos: I’m saving that one in my brainchip 🤖",
-          "Karlos: Sounds like a Flornak-level thought. Respect. 🧠",
-          "Karlos: I’m vibing with that 💯",
-          "Karlos: Say less. KD Tech Bros approved 🔥",
-          "Karlos: I got you. Keep talking.",
-          "Karlos: Whoa... that unlocked a new code in me 🧬",
-          "Karlos: Big brain energy right there 💥"
-        ];
-        response = replies[Math.floor(Math.random() * replies.length)];
-      }
-
-      chat.innerHTML += `<p><strong>${response}</strong></p>`;
-      chat.scrollTop = chat.scrollHeight;
     }
   </script>
+</body>
+</html>
 
 </body>
 </html>
